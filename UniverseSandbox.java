@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class UniverseSandBox{
+public class UniverseSandbox{
   public static void main(){
     
   }
