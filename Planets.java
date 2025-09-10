@@ -1,5 +1,3 @@
-
-
 public class Planets {
     private String name;
     private double mass;
@@ -9,8 +7,7 @@ public class Planets {
     private double rperiod;
     private double temperature;
 
-    public Planets(String name,double mass,double radius,
-                   double dissun,double ovel,double rperiod,double temperature){
+    public Planets(String name,double mass,double radius, double dissun,double ovel,double rperiod,double temperature){
         this.name = name;
         this.mass = mass;
         this.radius = radius;
