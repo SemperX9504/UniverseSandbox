@@ -1,47 +1,53 @@
 public class Physics {
-    private static final double g = 6.67430e-11;
-    private static final double mass_sun = 1.989e30;
+    private static final double G = 6.67430e-11; 
+    private static final double MASS_SUN = 1.989e30; 
 
-    public static double cgravity(double mass, double radius) {
-        return (g * mass) / (radius * radius);
+    public static double getGravity(double mass, double radius) {
+        return (G * mass) / (radius * radius);
     }
 
-    public static double getevelo(double mass, double radius) {
-        return Math.sqrt((2 * g * mass) / radius);
+    public static double getEscapeVelocity(double mass, double radius) {
+        return Math.sqrt((2 * G * mass) / radius);
     }
 
-    public static double getovelo(double dissun) {
-        return Math.sqrt((g * mass_sun) / dissun);
+    public static double getOrbitalVelocity(double distanceFromSun) {
+        return Math.sqrt((G * MASS_SUN) / distanceFromSun);
     }
 
-    public static double getdensity(double mass, double radius) {
+    public static double getDensity(double mass, double radius) {
         double volume = (4.0 / 3.0) * Math.PI * Math.pow(radius, 3);
         return mass / volume;
     }
 
-    public static double changemass(double mass, double factor) {
+    public static double changeMass(double mass, double factor) {
         return mass * factor;
     }
 
-    public static double changeradius(double radius, double factor) {
+    public static double changeRadius(double radius, double factor) {
         return radius * factor;
     }
 
-    public static double simulatechange(double mass, double radius, double massfactor) {
-        double newmass = changemass(mass, massfactor);
-        return cgravity(newmass, radius);
-    }
+    public static void simulateChange(double mass, double radius, String property, double factor) {
+        double newMass = mass;
+        double newRadius = radius;
 
-    public static double simulatechange(double mass, double radius, double radiusfactor, boolean changeradius) {
-        double newradius = changeradius(radius, radiusfactor);
-        return cgravity(mass, newradius);
-    }
-
-    public static double simulatechangedensity(double mass, double radius, double densityfactor) {
-        double olddensity = getdensity(mass, radius);
-        double newdensity = olddensity * densityfactor;
-        double volume = mass / newdensity;
-        double newradius = Math.cbrt((3 * volume) / (4 * Math.PI));
-        return cgravity(mass, newradius);
+        switch (property.toLowerCase()) {
+            case "mass":
+                newMass = changeMass(mass, factor);
+                break;
+            case "radius":
+                newRadius = changeRadius(radius, factor);
+                break;
+            case "density":
+                double oldDensity = getDensity(mass, radius);
+                double newDensity = oldDensity * factor;
+                double volume = mass / newDensity;
+                newRadius = Math.cbrt((3 * volume) / (4 * Math.PI));
+                break;
+            default:
+                System.out.println("Unknown property!");
+                return;
+        }
+        System.out.printf(" New Gravity: %.2f m/s²%n", getGravity(newMass, newRadius));
     }
 }
