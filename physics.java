@@ -1,17 +1,17 @@
 public class Physics {
-    private static final double g = 6.67430e-11;
+    private static final double G = 6.67430e-11;
     private static final double mass_sun = 1.989e30;
 
     public static double cgravity(double mass, double radius) {
-        return (g * mass) / (radius * radius);
+        return (G * mass) / (radius * radius);
     }
 
     public static double getevelo(double mass, double radius) {
-        return Math.sqrt((2 * g * mass) / radius);
+        return Math.sqrt((2 * G * mass) / radius);
     }
 
     public static double getovelo(double dissun) {
-        return Math.sqrt((g * mass_sun) / dissun);
+        return Math.sqrt((G * mass_sun) / dissun);
     }
 
     public static double getdensity(double mass, double radius) {
