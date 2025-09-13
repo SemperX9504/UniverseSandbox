@@ -1,4 +1,4 @@
-# Solar System Simulation
+# UniverseSandbox Simulation
 
 ## How to Run the Code
 
@@ -8,5 +8,5 @@
    git clone https://github.com/SemperX9504/UniverseSandbox.git
    cd your-repo-name
 
-2. **Run the Code**
+2. **Run the Code** <br>
    Run the SolarSystem.java (main file)
