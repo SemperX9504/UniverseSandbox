@@ -6,7 +6,7 @@
 
    ```bash
    git clone https://github.com/SemperX9504/UniverseSandbox.git
-   cd your-repo-name
+   cd UniverseSandbox
 
 2. **Run the Code** <br>
    Run the SolarSystem.java (main file)
