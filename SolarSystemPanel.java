@@ -13,6 +13,7 @@ public class SolarSystemPanel extends JPanel {
 
     private final List<CelestialBody> bodies;
     private final CelestialBody sun;
+    private final CelestialBody def;
 
     private int[] dragStartPoint;
     private int[] currentDragPoint;
@@ -27,6 +28,10 @@ public class SolarSystemPanel extends JPanel {
         int sunRadius = 40;
         sun = new CelestialBody(sunMass, WIDTH / 2.0, HEIGHT / 2.0, 0, 0, sunRadius, Color.YELLOW);
         bodies.add(sun);
+
+
+        def = new CelestialBody(150, WIDTH / 5.0, HEIGHT * 0.8, Color.BLUE);
+        bodies.add(def);
 
         MouseAdapter mouseHandler = new MouseAdapter() {
             @Override
@@ -119,7 +124,6 @@ public class SolarSystemPanel extends JPanel {
 
         if (dragStartPoint != null && currentDragPoint != null) {
             g.setColor(Color.CYAN);
-            // --- CHANGED: Accessing coordinates from the array ---
             g.drawLine(dragStartPoint[0], dragStartPoint[1], currentDragPoint[0], currentDragPoint[1]);
         }
     }

@@ -17,6 +17,10 @@ public class CelestialBody {
         this.color = color;
     }
 
+    public CelestialBody(double mass, double x, double y, Color color) {
+        this(mass, x, y, 8, 1, 20, color);
+    }
+
     public void updatePosition(double timeStep) {
         this.x += this.vx * timeStep;
         this.y += this.vy * timeStep;
