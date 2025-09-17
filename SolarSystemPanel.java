@@ -44,7 +44,7 @@ public class SolarSystemPanel extends JPanel{
 
         void update(){
             age++;
-            currentRadius +=(maxRadius - currentRadius) * 0.1; // Smoothly expand
+            currentRadius +=(maxRadius - currentRadius) * 0.1;
         }
 
         boolean isFinished(){
@@ -52,9 +52,8 @@ public class SolarSystemPanel extends JPanel{
         }
 
         void draw(Graphics g){
-            // Calculate alpha for a fade-out effect
             float alpha = 1.0f -((float) age / lifetime);
-            alpha = Math.max(0, Math.min(1, alpha)); // Clamp between 0 and 1
+            alpha = Math.max(0, Math.min(1, alpha));
 
             Graphics2D g2d =(Graphics2D) g;
             g2d.setColor(new Color(color.getRed(), color.getGreen(), color.getBlue(),(int)(alpha * 255)));
