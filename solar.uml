@@ -1,0 +1,102 @@
+@startuml
+' Changed theme to plain for a white background
+!theme plain 
+' Set diagram direction from Left to Right for better layout
+left to right direction
+
+' ====== External Classes and Interfaces ======
+' Using stereotypes to label them
+class JFrame <<Library Class>> {}
+class JPanel <<Library Class>> {}
+interface ActionListener
+interface MouseListener
+interface MouseMotionListener
+interface MouseWheelListener
+interface KeyListener
+
+' ====== Application Classes ======
+class SolarSystem {
+  -solarPanel : SolarSystemPanel
+  -animationTimer : Timer
+  -isPaused : boolean
+  -speedMultiplier : double
+  +SolarSystem()
+  -createControlPanel()
+  -createLabel(String, Color)
+  -addMouseListeners()
+  -addKeyboardListeners()
+  +{static} main(String[])
+}
+
+class SolarSystemPanel {
+  -planets : List<CelestialBody>
+  -sun : CelestialBody
+  -rotationX, rotationY, rotationZ : double
+  -zoom, scale, simulationTime : double
+  -showOrbits, showLabels, isPaused : boolean
+  -orbitColor : Color
+  -selectedPlanet : CelestialBody
+  -{static} TIME_STEP : double
+  -{static} SUN_RATIO, MERCURY_RATIO... : double
+  +SolarSystemPanel()
+  -initializeSolarSystem()
+  +updateSimulation(double)
+  +resetSimulation()
+  +rotateView(double, double)
+  +adjustZoom(double)
+  #paintComponent(Graphics)
+  ' ... other methods ...
+}
+
+class CelestialBody {
+  -name : String
+  -mass, radius : double
+  -color, trailColor : Color
+  -semiMajorAxis, eccentricity : double
+  -orbitalPeriod, inclination : double
+  -x, y, z, vx, vy, vz : double
+  -trail : List<Point3D>
+  -{static} MAX_TRAIL_LENGTH : int
+  +{static} AU, G, SOLAR_MASS : double
+  +CelestialBody(...)
+  +updatePosition(double, double)
+  +reset()
+  +getRotatedPosition(...)
+  +calculateGravitationalForce(CelestialBody)
+  +getters_and_setters()
+}
+
+class Point3D {
+  +x, y, z : final double
+  +Point3D(double, double, double)
+  +add(Point3D)
+  +multiply(double)
+}
+
+' ====== Relationships ======
+
+' --- Inheritance ---
+JFrame <|-- SolarSystem
+JPanel <|-- SolarSystemPanel
+
+' --- Implementation ---
+ActionListener <|.. SolarSystem
+MouseListener <|.. SolarSystem
+MouseMotionListener <|.. SolarSystem
+MouseWheelListener <|.. SolarSystem
+KeyListener <|.. SolarSystem
+
+' --- Composition ---
+SolarSystem "1" *-- "1" SolarSystemPanel : contains
+SolarSystemPanel "1" *-- "1" CelestialBody : sun
+
+' --- Aggregation ---
+SolarSystemPanel "1" o-- "*" CelestialBody : manages
+CelestialBody "1" o-- "*" Point3D : trail
+
+' --- Nested Class ---
+CelestialBody +-- Point3D
+
+' --- Dependency ---
+CelestialBody ..> Point3D : uses
+@enduml
