@@ -32,22 +32,14 @@ public class SolarSystemPanel extends JPanel {
     private void initializeSolarSystem() {
         sun = new CelestialBody("Sun", CelestialBody.SOLAR_MASS, 696340, Color.YELLOW, 0, 0, 0, 0);
         
-        planets.add(new CelestialBody("Mercury", 3.301e23, 2439.7, Color.GRAY,
-                              0.39, 0.206, 0.24, 7.0));
-        planets.add(new CelestialBody("Venus", 4.867e24, 6051.8, new Color(255,180,10),
-                              0.72, 0.007, 0.62, 3.4));
-        planets.add(new CelestialBody("Earth", 5.972e24, 6371, new Color(70,130,250),
-                              1.0, 0.017, 1.0, 0.0));
-        planets.add(new CelestialBody("Mars", 6.39e23, 3389.5, new Color(255,60,30),
-                              1.52, 0.094, 1.88, 1.9));
-        planets.add(new CelestialBody("Jupiter", 1.898e27, 69911, new Color(200,170,60),
-                              5.20, 0.049, 11.86, 1.3));
-        planets.add(new CelestialBody("Saturn", 5.683e26, 58232, new Color(210,180,140),
-                              9.58, 0.057, 29.46, 2.5));
-        planets.add(new CelestialBody("Uranus", 8.681e25, 25362, new Color(85,255,255),
-                              19.22, 0.046, 84.01, 0.8));
-        planets.add(new CelestialBody("Neptune", 1.024e26, 24622, new Color(60,130,255),
-                              30.05, 0.010, 164.8, 1.8));
+        planets.add(new CelestialBody("Mercury", 3.301e23, 2439.7, Color.GRAY, 0.39, 0.206, 0.24, 7.0));
+        planets.add(new CelestialBody("Venus", 4.867e24, 6051.8, new Color(255,180,10), 0.72, 0.007, 0.62, 3.4));
+        planets.add(new CelestialBody("Earth", 5.972e24, 6371, new Color(70,130,250), 1.0, 0.017, 1.0, 0.0));
+        planets.add(new CelestialBody("Mars", 6.39e23, 3389.5, new Color(255,60,30), 1.52, 0.094, 1.88, 1.9));
+        planets.add(new CelestialBody("Jupiter", 1.898e27, 69911, new Color(200,170,60), 5.20, 0.049, 11.86, 1.3));
+        planets.add(new CelestialBody("Saturn", 5.683e26, 58232, new Color(210,180,140), 9.58, 0.057, 29.46, 2.5));
+        planets.add(new CelestialBody("Uranus", 8.681e25, 25362, new Color(85,255,255), 19.22, 0.046, 84.01, 0.8));
+        planets.add(new CelestialBody("Neptune", 1.024e26, 24622, new Color(60,130,255), 30.05, 0.010, 164.8, 1.8));
     }
     
     public void updateSimulation(double speedMultiplier) {
