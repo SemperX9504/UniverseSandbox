@@ -3,7 +3,6 @@ import java.util.*;
 import java.util.List;
 
 public class CelestialBody {
-    // Physical properties
     private String name;
     private double mass;            // kg
     private double radius;          // km
