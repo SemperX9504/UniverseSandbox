@@ -11,24 +11,29 @@ public class SolarSystem extends JFrame {
     private JSlider speedSlider;
     
     public SolarSystem() {
-        setTitle("Solar System Simulation - Physics Based");
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setSize(1400, 900);
-        setLocationRelativeTo(null);
-        
-        panel = new SolarSystemPanel();
-        add(panel);
-        add(createControls(), BorderLayout.SOUTH);
-        
-        timer = new Timer(16, e -> {
-            if (!paused) {
-                panel.updateSimulation(speed);
-                panel.repaint();
-            }
-        });
-        timer.start();
-        
-        setupInput();
+        try {
+            setTitle("Solar System Simulation - Physics Based");
+            setDefaultCloseOperation(EXIT_ON_CLOSE);
+            setSize(1400, 900);
+            setLocationRelativeTo(null);
+            
+            panel = new SolarSystemPanel();
+            add(panel);
+            add(createControls(), BorderLayout.SOUTH);
+            
+            timer = new Timer(16, e -> {
+                if (!paused) {
+                    panel.updateSimulation(speed);
+                    panel.repaint();
+                }
+            });
+            timer.start();
+            
+            setupInput();
+        } catch (Exception e) {
+            e.printStackTrace(); 
+            JOptionPane.showMessageDialog(this, "An error occurred while initializing the simulation:\n" + e.getMessage(), "Initialization Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
     
     private JPanel createControls() {
