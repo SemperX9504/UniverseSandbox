@@ -3,14 +3,20 @@
 #include <string>
 using namespace std;
 
+#define PI 3.14159265358979323846
+
 class CelestialObject{
 public:
     struct Vec3{
         double x, y, z;
-        Vec3(double x = 0, double y = 0, double z = 0) : x(x), y(y), z(z){}
+        Vec3(double x = 0, double y = 0, double z = 0) {
+            this->x = x;
+            this->y = y;
+            this->z = z;
+        }
         
         Vec3 operator+(const Vec3& other) const{
-            return Vec3(x + other.x, y + other.y, z + other.z);
+            return Vec3(x + other.x, y + other.y, z + other.z); // x + y
         }
         
         Vec3 operator-(const Vec3& other) const{
@@ -54,29 +60,36 @@ protected:
 
 public:
 
-    CelestialBody(string name, double mass, double radius, double semiMajorAxis, double eccentricity, double period, double inclinationDeg) 
-        : name(std::move(name)), mass(mass), radius(radius), semiMajorAxis(semiMajorAxis), eccentricity(eccentricity), period(period), inclination(inclinationDeg * M_PI / 180.0){
+    CelestialBody(string n, double m, double r, double a, double e, double p, double iDeg){
+        name = n;
+        mass = m;
+        radius = r;
+        semiMajorAxis = a;
+        eccentricity = e;
+        period = p;
+        inclination = iDeg * PI / 180.0;
 
-        if (semiMajorAxis > 0.0){
+        if (semiMajorAxis > 0.0)
             computeInitialState();
-        } else{
+        else {
             position = Vec3(0, 0, 0);
             velocity = Vec3(0, 0, 0);
             acceleration = Vec3(0, 0, 0);
         }
     }
 
+
     virtual ~CelestialBody() = default;
 
-    void update(double dt) override{
+    void update(double dt){
         position = position + velocity * dt + acceleration * (0.5 * dt * dt);
     }
     
-    string getType() const override{
+    string getType() const{
         return "Body";
     }
     
-    double getMass() const override{
+    double getMass() const{
         return mass;
     }
     
@@ -106,9 +119,9 @@ protected:
         position.y = r * sin(0) * cos(inclination);
         position.z = r * sin(0) * sin(inclination);
         
-        const double G_M_sun = 4.0 * M_PI * M_PI; // Gaussian gravitational constant
+        const double G_M_sun = 4.0 * PI * PI; // Gaussian gravitational constant
         
-        double v = sqrt(G_M_sun * (2.0/r - 1.0/semiMajorAxis));
+        double v = sqrt(G_M_sun * (2.0/r - 1.0/semiMajorAxis)); // vis-viva eqn
         
         velocity.x = 0;
         velocity.y = v * cos(inclination);
@@ -121,10 +134,11 @@ protected:
 class Planet : public CelestialBody{
     string planetType;
 public:
-    Planet(string name, double mass, double radius, double semiMajorAxis, double eccentricity, double period, double inclinationDeg, string type) 
-        : CelestialBody(name, mass, radius, semiMajorAxis, eccentricity, period, inclinationDeg), planetType(type){}
+    Planet(string name, double mass, double radius, double semiMajorAxis, double eccentricity, double period, double inclinationDeg, string type) : CelestialBody(name, mass, radius, semiMajorAxis, eccentricity, period, inclinationDeg){
+        planetType = type;
+    }
     
-    string getType() const override{
+    string getType() const{
         return planetType + " Planet";
     }
     
@@ -136,9 +150,9 @@ public:
     Star(string name, double mass, double radius) 
         : CelestialBody(name, mass, radius, 0.0, 0.0, 0.0, 0.0){}
     
-    string getType() const override{
+    string getType() const{
         return "Star";
     }
     
-    void update(double dt) override{}
+    void update(double dt){}
 };

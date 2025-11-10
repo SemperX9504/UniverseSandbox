@@ -15,10 +15,13 @@ private:
     double time;
     static constexpr double G = 4.0 * M_PI * M_PI;
     
-    CelestialObject::Vec3 computeAcceleration(size_t bodyIndex);
+    CelestialObject::Vec3 computeAcceleration(int bodyIndex);
 };
 
-SolarSystemSimulation::SolarSystemSimulation() : time(0) {
+SolarSystemSimulation::SolarSystemSimulation(){
+
+    time = 0;
+
     bodies.push_back(new Star("Sun", 1.989e30, 696340));
     
     bodies.push_back(new Planet("Mercury", 3.3e23, 2439.7, 0.39, 0.206, 0.24, 7.0, "Rocky"));
@@ -30,7 +33,7 @@ SolarSystemSimulation::SolarSystemSimulation() : time(0) {
     bodies.push_back(new Planet("Uranus", 8.68e25, 25362, 19.22, 0.046, 84.01, 0.8, "Ice Giant"));
     bodies.push_back(new Planet("Neptune", 1.02e26, 24622, 30.05, 0.010, 164.8, 1.8, "Ice Giant"));
     
-    for (size_t i = 0; i < bodies.size(); ++i) {
+    for (int i = 0; i < bodies.size(); ++i) {
         bodies[i]->acceleration = computeAcceleration(i);
     }
 }
@@ -42,11 +45,11 @@ SolarSystemSimulation::~SolarSystemSimulation() {
     bodies.clear();
 }
 
-CelestialObject::Vec3 SolarSystemSimulation::computeAcceleration(size_t bodyIndex) {
+CelestialObject::Vec3 SolarSystemSimulation::computeAcceleration(int bodyIndex) {
     CelestialObject::Vec3 totalAccel(0, 0, 0);
     CelestialObject* body = bodies[bodyIndex];
     
-    for (size_t j = 0; j < bodies.size(); ++j) {
+    for (int j = 0; j < bodies.size(); ++j) {
         if (j == bodyIndex) continue;
         
         CelestialObject* other = bodies[j];
@@ -68,17 +71,17 @@ CelestialObject::Vec3 SolarSystemSimulation::computeAcceleration(size_t bodyInde
 }
 
 string SolarSystemSimulation::update(double dt) {
-    for (size_t i = 0; i < bodies.size(); ++i) {
+    for (int i = 0; i < bodies.size(); ++i) {
         bodies[i]->update(dt);
     }
     
     vector<CelestialObject::Vec3> newAccelerations;
-    for (size_t i = 0; i < bodies.size(); ++i) {
+    for (int i = 0; i < bodies.size(); ++i) {
         newAccelerations.push_back(computeAcceleration(i));
     }
     
-    for (size_t i = 0; i < bodies.size(); ++i) {
-        CelestialBody* body = dynamic_cast<CelestialBody*>(bodies[i]);
+    for (int i = 0; i < bodies.size(); ++i) {
+        CelestialBody* body = (CelestialBody*)bodies[i];
         if (body) {
             body->updateVelocity(dt, newAccelerations[i]);
         }
@@ -88,11 +91,11 @@ string SolarSystemSimulation::update(double dt) {
     
     ostringstream out;
     out << "{\"planets\":[";
-    for (size_t i = 1; i < bodies.size(); ++i) {
+    for (int i = 1; i < bodies.size(); ++i) {
         auto pos = bodies[i]->position;
         string type = bodies[i]->getType();
         
-        CelestialBody* body = dynamic_cast<CelestialBody*>(bodies[i]);
+        CelestialBody* body = (CelestialBody*)bodies[i];
         double gravity = body ? body->getSurfaceGravity() : 0.0;
         
         out << "{\"pos\":[" << pos.x << "," << pos.y << "," << pos.z << "],"
